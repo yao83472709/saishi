@@ -184,6 +184,7 @@ return [
         'prefix' => '',
         // 缓存有效期 0表示永久缓存
         'expire' => 0,
+        'tpl_cache' => false,
     ],
 
     // +----------------------------------------------------------------------
@@ -227,5 +228,14 @@ return [
         'type'      => 'bootstrap',
         'var_page'  => 'page',
         'list_rows' => 15,
+    ],
+//    'parse_str'=>[
+//        '__PUBLIC__'=>'/public/',
+//        '__ROOT__' => '/',
+//    ],
+    'view_replace_str'       => [
+        '_CSS_'=>'/assets/css',
+        '_JS_'=>'/assets/js',
+        '_IMG_'=>'/assets/img'
     ],
 ];

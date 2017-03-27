@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2017 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -59,10 +59,10 @@ class Pgsql extends Connection
                 $info[$val['field']] = [
                     'name'    => $val['field'],
                     'type'    => $val['type'],
-                    'notnull' => (bool) ('' !== $val['null']),
+                    'notnull' => (bool) ('' === $val['null']), // not null is empty, null is yes
                     'default' => $val['default'],
-                    'primary' => !empty($val['key']),
-                    'autoinc' => (0 === strpos($val['extra'], 'nextval(')),
+                    'primary' => (strtolower($val['key']) == 'pri'),
+                    'autoinc' => (strtolower($val['extra']) == 'auto_increment'),
                 ];
             }
         }
@@ -77,7 +77,6 @@ class Pgsql extends Connection
      */
     public function getTables($dbName = '')
     {
-        $this->initConnect(true);
         $sql = "select tablename as Tables_in_test from pg_tables where  schemaname ='public'";
         // 调试开始
         $this->debug(true);
